@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_win.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrstein <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 05:50:31 by chrstein          #+#    #+#             */
-/*   Updated: 2024/02/23 05:50:32 by chrstein         ###   ########.fr       */
+/*   Updated: 2024/06/21 09:29:53 by chrstein         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "../includes/cub3d.h"
 
 int	rec_check(t_map *cpy, int y, int x)
 {

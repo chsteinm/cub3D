@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrstein <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 05:50:54 by chrstein          #+#    #+#             */
-/*   Updated: 2024/02/23 05:52:22 by chrstein         ###   ########.fr       */
+/*   Updated: 2024/06/21 09:29:53 by chrstein         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "../includes/cub3d.h"
 
 void	redraw(void *mlx_ptr, void *win_ptr, t_data *data)
 {

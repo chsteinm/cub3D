@@ -22,5 +22,4 @@ void	ft_free_strings(char **strs)
 	while (strs[i])
 		free(strs[i++]);
 	free(strs);
-	strs = NULL;
 }

@@ -1,8 +1,8 @@
-.build/parse.o: srcs/parse.c srcs/../includes/so_long.h \
+.build/parse.o: srcs/parse.c srcs/../includes/cub3d.h \
   includes/./libft/libft.h includes/get_next_line.h \
   includes/../minilibx-linux/mlx.h
 
-srcs/../includes/so_long.h:
+srcs/../includes/cub3d.h:
 
 includes/./libft/libft.h:
 

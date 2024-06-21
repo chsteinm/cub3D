@@ -12,12 +12,12 @@
 
 #include "libft.h"
 
-char	**strsdup(char **strs, size_t size)
+char	**ft_strsdup(char **strs, size_t size)
 {
 	char	**ret;
 	size_t	i;
 
-	ret = malloc(sizeof(char *) * (size + 1));
+	ret = ft_calloc((size + 1), sizeof(char *));
 	if (!ret)
 		return (NULL);
 	i = -1;
@@ -27,6 +27,5 @@ char	**strsdup(char **strs, size_t size)
 		if (!ret[i])
 			return (ft_free_strings(ret), NULL);
 	}
-	ret[i] = NULL;
 	return (ret);
 }

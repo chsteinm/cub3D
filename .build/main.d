@@ -1,11 +1,11 @@
-.build/main.o: srcs/main.c srcs/../includes/so_long.h \
-  includes/./libft/libft.h includes/get_next_line.h \
+.build/main.o: srcs/main.c srcs/../includes/cub3d.h \
+  includes/./libft/libft.h includes/./libft/get_next_line.h \
   includes/../minilibx-linux/mlx.h
 
-srcs/../includes/so_long.h:
+srcs/../includes/cub3d.h:
 
 includes/./libft/libft.h:
 
-includes/get_next_line.h:
+includes/./libft/get_next_line.h:
 
 includes/../minilibx-linux/mlx.h:

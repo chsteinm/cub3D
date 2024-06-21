@@ -8,7 +8,10 @@ SRCS = 	ft_atol.c \
 		ft_isascii.c \
 		ft_isdigit.c \
 		ft_isprint.c \
+		ft_ismeta.c \
 		ft_iswhitespace.c \
+		ft_replace_white_space.c \
+		ft_skip_wspaces.c \
 		ft_itoa.c \
 		ft_memchr.c \
 		ft_memcmp.c \
@@ -22,14 +25,18 @@ SRCS = 	ft_atol.c \
 		ft_split.c \
 		ft_strchr.c \
 		ft_strdup.c \
+		ft_strdelspace.c \
 		ft_striteri.c \
 		ft_strjoin.c \
 		ft_strlcat.c \
 		ft_strlcpy.c \
 		ft_strlen.c \
+		ft_strssize.c \
 		ft_strmapi.c \
 		ft_strncmp.c \
 		ft_strnstr.c \
+		ft_strndup.c \
+		ft_rstrnstr.c \
 		ft_strrchr.c \
 		ft_strtrim.c \
 		ft_substr.c \
@@ -37,12 +44,18 @@ SRCS = 	ft_atol.c \
 		ft_toupper.c \
 		ft_itoa_base.c \
 		ft_free_strings.c \
+		ft_free_and_null.c \
 		ft_strsdup.c \
 		ft_printf.c \
+		ft_dprintf.c \
 		ft_print_conversions.c \
+		ft_dprint_conversions.c \
 		ft_utoa.c \
 		ft_putnbr_base.c \
-		ft_printstrs.c
+		ft_putnbr_base_fd.c \
+		ft_printstrs.c \
+		get_next_line.c \
+		ft_strtol.c
 OBJ = $(addprefix $(BUILD_DIR)/,$(SRCS:.c=.o))
 SRCS_BONUS =	ft_lstadd_back_bonus.c \
 				ft_lstadd_front_bonus.c \

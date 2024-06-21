@@ -17,23 +17,37 @@
 # include <unistd.h>
 # include <stddef.h>
 # include <stdarg.h>
+# include <stdbool.h>
+# include <limits.h>
+# include "get_next_line.h"
 
+# define SUCCESS 0
+# define FAILURE 1
+# define TRUE 1
+# define FALSE 0
+# define CLEAR " \e[1;H\e[2J"
 # define BASE16LOW "0123456789abcdef"
 # define BASE16UP "0123456789ABCDEF"
 
 typedef struct s_list
 {
+	char			**cmd;
+	char  			*file_in;
+	char			*file_out;
+	int				fd_in;
+	int				fd_out;
+	bool			append_out;
+	bool			fd_in_to_close;
+	bool			fd_out_to_close;
+	int				pipe[2];
+	bool			fds_pipe_to_close;
+	int				pipe_heredoc[2];
+	bool			fds_pipe_hd_to_close;
+	char			*lim;
+	pid_t			pid;
 	void			*content;
-	int				index;
-	char			*index_base;
-	int				len_index_base;
 	struct s_list	*next;
-	struct s_list	*prec;
-	int				price;
-	int				place;
-	int				nearest_index_place;
-	int				near_diff;
-	int				nb_bigger;
+	struct s_list	*prev;
 }	t_list;
 
 int		ft_isalpha(int c);
@@ -41,8 +55,12 @@ int		ft_isdigit(int c);
 int		ft_isalnum(int c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);
+int		ft_ismeta(char c);
 int		ft_iswhitespace(char c);
+void	ft_replace_white_space(char *line);
+void	ft_skip_wspaces(char **ptr);
 size_t	ft_strlen(const char *str);
+size_t	ft_strssize(char **strs);
 long	ft_atol(const char *str);
 void	*ft_bzero(char *str, int size);
 void	*ft_memset(void *str, int c, size_t size);
@@ -56,11 +74,14 @@ int		ft_tolower(int c);
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strchr(const char *str, int c);
-char	*ft_strdup(char *src);
+char	*ft_strdup(const char *src);
+char	*ft_strndup(const char *ptr, size_t len);
+char	*ft_strdelspace(char *src);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 int		ft_strncmp(const char *s1, const char *s2, int n);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
+char	*ft_rstrnstr(char *haystack, char *needle, size_t len);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(char const *s, char c);
@@ -82,13 +103,20 @@ void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 void	ft_free_strings(char **strs);
-char	**strsdup(char **strs, size_t size);
+void	ft_free_and_null(void *ptr_adrs);
+char	**ft_strsdup(char **strs, size_t size);
 int		ft_printf(const char *str, ...);
+int		ft_dprintf(int fd, const char *str, ...);
 int		print_str(va_list args);
+int		print_str_fd(va_list args, int fd);
 int		print_n_base10(va_list args, char c);
+int		print_n_base10_fd(va_list args, char c, int fd);
 char	*ft_utoa(unsigned int n);
 int		ft_putnbr_base(size_t nb, char *base, size_t base_len);
+int		ft_putnbr_base_fd(size_t nb, char *base, size_t base_len, int fd);
 int		print_p(va_list args);
+int		print_p_fd(va_list args, int fd);
 void	ft_printstrs(char **strs);
+long	ft_strtol(char *str, char **endptr, int base);
 
 #endif
