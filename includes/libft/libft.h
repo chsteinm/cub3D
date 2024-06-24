@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrstein <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:33:48 by chrstein          #+#    #+#             */
-/*   Updated: 2024/02/15 20:58:43 by chrstein         ###   ########.fr       */
+/*   Updated: 2024/06/24 11:18:01 by chrstein         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,6 @@
 
 typedef struct s_list
 {
-	char			**cmd;
-	char  			*file_in;
-	char			*file_out;
-	int				fd_in;
-	int				fd_out;
-	bool			append_out;
-	bool			fd_in_to_close;
-	bool			fd_out_to_close;
-	int				pipe[2];
-	bool			fds_pipe_to_close;
-	int				pipe_heredoc[2];
-	bool			fds_pipe_hd_to_close;
-	char			*lim;
-	pid_t			pid;
 	void			*content;
 	struct s_list	*next;
 	struct s_list	*prev;
@@ -105,18 +91,13 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 void	ft_free_strings(char **strs);
 void	ft_free_and_null(void *ptr_adrs);
 char	**ft_strsdup(char **strs, size_t size);
-int		ft_printf(const char *str, ...);
 int		ft_dprintf(int fd, const char *str, ...);
-int		print_str(va_list args);
 int		print_str_fd(va_list args, int fd);
-int		print_n_base10(va_list args, char c);
 int		print_n_base10_fd(va_list args, char c, int fd);
 char	*ft_utoa(unsigned int n);
-int		ft_putnbr_base(size_t nb, char *base, size_t base_len);
 int		ft_putnbr_base_fd(size_t nb, char *base, size_t base_len, int fd);
-int		print_p(va_list args);
 int		print_p_fd(va_list args, int fd);
-void	ft_printstrs(char **strs);
+void	ft_printstrs(char **strs, int fd);
 long	ft_strtol(char *str, char **endptr, int base);
 
 #endif

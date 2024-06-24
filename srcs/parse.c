@@ -6,175 +6,228 @@
 /*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 03:47:15 by chrstein          #+#    #+#             */
-/*   Updated: 2024/06/21 13:43:59 by chrstein         ###   ########lyon.fr   */
+/*   Updated: 2024/06/24 12:12:30 by chrstein         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-// int	check_valid_char(char c)
-// {
-// 	if (c != 'P' && \
-// 			c != 'E' && \
-// 			c != 'C' && \
-// 			c != '1' && \
-// 			c != '0' && \
-// 			c != '\n')
-// 		return (0);
-// 	else
-// 		return (1);
-// }
-
-// int	check_nbrs(t_game *game)
-// {
-// 	int	start;
-// 	int	exit;
-// 	int	i;
-
-// 	game->nb_collect = 0;
-// 	start = 0;
-// 	exit = 0;
-// 	i = -1;
-// 	while (game->one_data->line_map[++i])
-// 	{
-// 		if (game->one_data->line_map[i] == 'C')
-// 			game->nb_collect++;
-// 		else if (game->one_data->line_map[i] == 'P')
-// 			start++;
-// 		else if (game->one_data->line_map[i] == 'E')
-// 			exit++;
-// 		if (!check_valid_char(game->one_data->line_map[i]))
-// 			return (ft_printf("Error\nInvalid char\n"), 0);
-// 	}
-// 	if (!(start == 1 && exit == 1 && game->nb_collect))
-// 		return (ft_printf("Error\nInvalid number of E, P or C\n"), 0);
-// 	return (check_win(*map));
-// }
-
-// int	check_rectangle(t_game *game)
-// {
-// 	int	i;
-
-// 	game->x = ft_strlen(game->map[0]) - 1;
-// 	game->y = 0;
-// 	while (game->map[++game->y])
-// 		if (ft_strlen(game->map[game->y]) - 1 != (size_t)game->x)
-// 			return (ft_printf("Error\nMap not rectangular\n"), 0);
-// 	game->y--;
-// 	i = -1;
-// 	while (game->map[0][++i])
-// 		if (game->map[0][i] != '1')
-// 			return (ft_printf("Error\nMap not surrounded by walls\n"), 0);
-// 	i = -1;
-// 	while (game->map[0][++i])
-// 		if (game->map[game->y][i] != '1')
-// 			return (ft_printf("Error\nMap not surrounded by walls\n"), 0);
-// 	i = -1;
-// 	while (game->map[++i])
-// 		if (game->map[i][0] != '1')
-// 			return (ft_printf("Error\nMap not surrounded by walls\n"), 0);
-// 	i = -1;
-// 	while (game->map[++i])
-// 		if (game->map[i][game->x] != '1')
-// 			return (ft_printf("Error\nMap not surrounded by walls\n"), 0);
-// 	return (check_nbrs(map));
-// }
-
-int	fill_p_pos(t_game *game)
+void	check_xpm(t_data *data, char *line_ptr)
 {
-	if (!game->map)
-		return (ft_printf("Error\nMalloc failed\n"), 0);
-	game->player_y = 0;
-	while (game->map[++game->player_y])
+	int	fd;
+	
+	if (*line_ptr == '\0' || *line_ptr == '\n')
 	{
-		game->player_x = 0;
-		while (game->map[game->player_y][++game->player_x])
-			if (game->map[game->player_y][game->player_x] == 'P')
-				return (1);
+		ft_dprintf(2, "Error\nNothing after %s\n", data->line);
+		return (free_all(data), exit(1));
 	}
-	return (0);
+	if (!ft_rstrnstr(line_ptr, ".xpm\n", 5))
+	{
+		ft_dprintf(1, "Error\nNeed a .xpm file : %s\n", data->line);
+		return (free_all(data), exit(1));
+	}
+	fd = ft_strlen(line_ptr) - 1;
+	line_ptr[fd] = '\0';
+	fd = open(line_ptr, O_RDONLY);
+	if (fd == -1)
+	{
+		ft_dprintf(2, "Error\n%s", line_ptr), perror("");
+		return (free_all(data), exit(1));
+	}
+	close(fd);
 }
 
-void	xpm_load(t_data *data, void *xpm_ptr, int xpm_index)
+void	xpm_load(t_data *data, void **xpm_ptr)
 {
 	char	*line_ptr;
+	int		width;
+	int		height;
 
+	if (*xpm_ptr)
+	{
+		ft_dprintf(2, "Error\nMultiple indentifier %c%c found\n", *data->line, data->line[1]);
+		return (free_all(data), exit(1));
+	}
 	line_ptr = data->line + 3;
 	while (*line_ptr == ' ')
 		line_ptr++;
-	if (*line_ptr = '\0')
+	check_xpm(data, line_ptr);
+	*xpm_ptr = mlx_xpm_file_to_image(data->mlx, line_ptr, &width, &height);
+    if (*xpm_ptr == NULL)
 	{
-		ft_printf("Error\nNothing after %s\n", data->line);
+		ft_dprintf(2, "Error\nCan't load %s\n", line_ptr);
 		return (free_all(data), exit(1));
 	}
-	//test access
-	//xpm_to_img(...)
-	// if error...
 }
 
-void	fill_color(t_data *data, char *color)
+void	check_color(t_data *data, char *line_ptr)
+{
+	size_t	i;
+	int		nb_of_color;
+	
+	nb_of_color = 0;
+	i = -1;
+	while (line_ptr[++i] && line_ptr[i] != '\n')
+	{
+		if (ft_isalnum(line_ptr[i]))
+		{
+			nb_of_color++;
+			while (ft_isalnum(line_ptr[i]))
+				i++;
+			continue ;
+		}
+		if (!ft_isdigit(line_ptr[i]) && line_ptr[i] != ',')
+		{
+			ft_dprintf(2, "Error\nIncorrect char : \"%c\"\n", line_ptr[i]);
+			return (free_all(data), exit(1));
+		}
+	}
+	if (nb_of_color != 3)
+	{
+		ft_dprintf(2, "Error\nNeed R,G,B\n");
+		return (free_all(data), exit(1));
+	}
+}
+
+int		special_atoi(t_data *data, char **line_ptr)
+{
+	int		res;
+	char	*ptr;
+
+	ptr = *line_ptr;
+	res = 0;
+	while (*ptr && *ptr != ',' && *ptr != '\n')
+	{
+		res = res * 10 + (*ptr - 48);
+		if (res > 255)
+		{
+			ft_dprintf(2, "Error\nR,G,B need value <= 255\n", data->line);
+			free_all(data);
+			exit(1);
+		}
+		ptr++;
+	}
+	while (*ptr == ',')
+		ptr++;
+	if (*ptr && *ptr != '\n' && !ft_isdigit(*ptr))
+	{
+		ft_dprintf(2, "Error\nIncorrect char : \"%c\"\n", *ptr);
+		return (free_all(data), exit(1), 1);
+	}
+	*line_ptr = ptr;
+	return (res);
+}
+
+void	double_check_color(t_data *data, char color)
+{
+	if (color == 'C' && data->c_blue != -1)
+	{
+		ft_dprintf(2, "Error\nMultiple identifier %c\n", color);
+		return (free_all(data), exit(1));
+	}
+	if (color == 'F' && data->f_blue != -1)
+	{
+		ft_dprintf(2, "Error\nMultiple identifier %c\n", color);
+		return (free_all(data), exit(1));
+	}
+}
+
+void	fill_color(t_data *data, char color)
 {
 	char	*line_ptr;
 
 	line_ptr = data->line + 2;
 	while (*line_ptr == ' ')
 		line_ptr++;
-	if (*line_ptr = '\0')
+	if (*line_ptr == '\n' || *line_ptr == '\0')
 	{
-		ft_printf("Error\nNothing after %s\n", data->line);
+		ft_dprintf(2, "Error\nNothing after %s\n", data->line);
 		return (free_all(data), exit(1));
 	}
-	//if c = c
-	//data->f = ...
-	//else c = floor
-	//data->c = ...
-	//check_error
+	check_color(data, line_ptr);
+	double_check_color(data, color);
+	if (color == 'C')
+		data->c_red = special_atoi(data, &line_ptr);
+	else
+		data->f_red = special_atoi(data, &line_ptr);
+	if (color == 'C')
+		data->c_green = special_atoi(data, &line_ptr);
+	else
+		data->f_green = special_atoi(data, &line_ptr);
+	if (color == 'C')
+		data->c_blue = special_atoi(data, &line_ptr);
+	else
+		data->f_blue = special_atoi(data, &line_ptr);
 }
 
+void	check_all_identifer(t_data *data)
+{
+	if (!data->ea_xpm || !data->no_xpm || !data->ea_xpm || !data->we_xpm)
+	{
+		ft_dprintf(2, "Error\nNeed all the identifiers\n");
+		return (free_all(data), exit(1));
+	}
+	if (data->c_blue == -1 || data->c_green == -1 || data->c_red == -1)
+	{
+		ft_dprintf(2, "Error\nNeed the ceiling colors\n");
+		return (free_all(data), exit(1));
+	}
+	if (data->f_blue == -1 || data->f_green == -1 || data->f_red == -1)
+	{
+		ft_dprintf(2, "Error\nNeed the floor colors\n");
+		return (free_all(data), exit(1));
+	}
+}
 
-void	fill_identifier(t_data *data)
+void	fill_map(t_data *data)
 {
 	char	*line_ptr;
 
+	line_ptr = data->line;
+	while (*line_ptr == ' ')
+		line_ptr++;
+	if (*line_ptr != '1')
+	{
+		ft_dprintf(2, "Error\n%s : Incorrect line\n", data->line);
+		return (free_all(data), exit(1));
+	}
+	check_all_identifer(data);
+	printf("\nLet's goooooo !!!!!\n");
+}
+
+void	fill_identifier(t_data *data)
+{
 	if (!ft_strncmp(data->line, "NO ", 3))
-		xpm_load(data, data->xpm_ptr, _NO);
-	else if (ft_strncmp(data->line, "SO ", 3))
-		xpm_load(data, data->xpm_ptr, _SO);
-	else if (ft_strncmp(data->line, "EA ", 3))
-		xpm_load(data, data->xpm_ptr, _EA);
-	else if (ft_strncmp(data->line, "WE ", 3))
-		xpm_load(data, data->xpm_ptr, _WE);
-	else if (ft_strncmp(data->line, "F ", 2))
+		xpm_load(data, &data->no_xpm);
+	else if (!ft_strncmp(data->line, "SO ", 3))
+		xpm_load(data, &data->so_xpm);
+	else if (!ft_strncmp(data->line, "EA ", 3))
+		xpm_load(data, &data->ea_xpm);
+	else if (!ft_strncmp(data->line, "WE ", 3))
+		xpm_load(data, &data->we_xpm);
+	else if (!ft_strncmp(data->line, "F ", 2))
 		fill_color(data, 'F');
-	else if (ft_strncmp(data->line, "C ", 2))
+	else if (!ft_strncmp(data->line, "C ", 2))
 		fill_color(data, 'C');
 	else if (*data->line != '\n')
 	{
-		line_ptr = data->line;
-		while (*line_ptr == ' ')
-			line_ptr++;
-		if (*data->line != '\n')
-		{
-			ft_printf("Error\n%s : Incorrect identifer\n", data->line);
-			return (free_all(data), exit(1));
-		}
+		fill_map(data);
+		return (free_all(data), exit(0));
 	}
 }
 
 void	parse(t_data *data)
 {
-	char	*tmp_ptr;
-
 	data->line = get_next_line(data->fd);
 	if (!data->line)
-		return (ft_printf("Error\nEmpty file\n"), 0);
+	{
+		ft_dprintf(2, "Error\nEmpty file\n");
+		return (free_all(data), exit(0));
+	}
 	while (data->line)
 	{
 		fill_identifier(data);
 		free(data->line);
 		data->line = get_next_line(data->fd);
 	}
-	if (!fill_p_pos(&data->game) || !check_rectangle(data))
-		return (0);
-	return (1);
 }

@@ -46,9 +46,7 @@ SRCS = 	ft_atol.c \
 		ft_free_strings.c \
 		ft_free_and_null.c \
 		ft_strsdup.c \
-		ft_printf.c \
 		ft_dprintf.c \
-		ft_print_conversions.c \
 		ft_dprint_conversions.c \
 		ft_utoa.c \
 		ft_putnbr_base.c \

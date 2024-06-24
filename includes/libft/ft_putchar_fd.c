@@ -1,36 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                              :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrstein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 17:22:58 by chrstein          #+#    #+#             */
-/*   Updated: 2024/02/06 17:23:00 by chrstein         ###   ########.fr       */
+/*   Created: 2023/11/06 16:11:15 by chrstein          #+#    #+#             */
+/*   Updated: 2023/11/06 16:11:30 by chrstein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include <unistd.h>
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
-# endif
-
-# include "./libft/libft.h"
-
-# include <unistd.h>
-# include <stdlib.h>
-
-typedef struct s_struct
+void	ft_putchar_fd(char c, int fd)
 {
-	char	buf[BUFFER_SIZE + 1];
-	char	*tmp;
-	char	*tmp_tmp;
-	char	*buf_ptr;
-	ssize_t	bytes_read;
-}	t_struct;
-
-char	*get_next_line(int fd);
-
-#endif
+	write(fd, &c, 1);
+}
