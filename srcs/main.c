@@ -6,7 +6,7 @@
 /*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 03:46:35 by chrstein          #+#    #+#             */
-/*   Updated: 2024/06/27 10:03:21 by chrstein         ###   ########lyon.fr   */
+/*   Updated: 2024/06/27 11:56:01 by chrstein         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ void	set_data(t_data *data, char *path)
 	data->fd = open(path, __O_DIRECTORY);
 	if (data->fd != -1)
 	{
-		ft_dprintf(2, "Error\n%s: is a directory", path);
+		ft_dprintf(2, "Error\n%s: is a directory\n", path);
 		return (free_all(data), exit(1));
 	}
 	data->fd = open(path, O_RDONLY);
 	if (data->fd == -1)
 	{
-		ft_dprintf(2, "Error\n%s: ", path), perror("");
+		ft_dprintf(2, "Error\n%s: %s\n", path, strerror(errno));
 		return (free_all(data), exit(1));
 	}
 	data->c_blue = -1;

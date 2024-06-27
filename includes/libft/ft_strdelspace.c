@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strdelspace.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chrstein <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/27 12:25:41 by chrstein          #+#    #+#             */
+/*   Updated: 2024/06/27 12:28:40 by chrstein         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 static size_t	count_whitespace(char *str)
@@ -5,7 +17,7 @@ static size_t	count_whitespace(char *str)
 	size_t	n;
 
 	n = 0;
-	while(*str)
+	while (*str)
 		if (ft_iswhitespace(*str++))
 			n++;
 	return (n);

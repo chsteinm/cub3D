@@ -1,6 +1,7 @@
 .build
 includes/libft/.build
 includes/libft/libft.a
+textures/north_chmod000.xpm
 cub3D
 .vscode
 11-Cub3D

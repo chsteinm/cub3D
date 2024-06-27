@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_rstrnstr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: chrstein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/01 23:50:59 by chrstein          #+#    #+#             */
-/*   Updated: 2024/06/21 13:27:11 by chrstein         ###   ########lyon.fr   */
+/*   Created: 2024/06/27 12:31:40 by chrstein          #+#    #+#             */
+/*   Updated: 2024/06/27 12:31:47 by chrstein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,3 @@ char	*ft_rstrnstr(char *haystack, char *needle, size_t len)
 	}
 	return (0);
 }
-

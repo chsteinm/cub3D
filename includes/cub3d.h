@@ -6,7 +6,7 @@
 /*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 18:05:40 by chrstein          #+#    #+#             */
-/*   Updated: 2024/06/27 07:13:50 by chrstein         ###   ########lyon.fr   */
+/*   Updated: 2024/06/27 12:48:30 by chrstein         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,17 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <string.h>
+# include <errno.h>
 
 # define W 119
 # define S 115
 # define A 97
 # define D 100
 # define ESC 65307 //voir meilleur solution pour compatibilite
+
+# define ERRCHARC "Error\nIncorrect char in %c colors : \"%c\"\n"
+# define ERRCHARM "Error\nIncorrect char in map : \"%c\"\n"
+# define ERREMPTYLINE "Error\nMap can not be separated by empty line(s)\n"
 
 // enum e_xpm
 // {
@@ -69,5 +74,11 @@ typedef struct s_data
 
 void	free_all(t_data *data);
 void	parse(t_data *data);
+void	xpm_load(t_data *data, void **xpm_ptr);
+void	fill_color(t_data *data, char color);
+void	check_map(t_data *data, char **map);
+bool	is_player(char c);
+bool	is_void(char c);
+bool	map_is_not_finished(char **map, int j);
 
 #endif

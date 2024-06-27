@@ -6,7 +6,7 @@
 /*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:33:48 by chrstein          #+#    #+#             */
-/*   Updated: 2024/06/27 04:20:56 by chrstein         ###   ########lyon.fr   */
+/*   Updated: 2024/06/27 12:22:58 by chrstein         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int		ft_isdigit(int c);
 int		ft_isalnum(int c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);
-int		ft_ismeta(char c);
 int		ft_iswhitespace(char c);
 void	ft_replace_white_space(char *line);
 void	ft_skip_wspaces(char **ptr);

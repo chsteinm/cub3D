@@ -3,7 +3,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
 MLXFLAGS = -L ./minilibx-linux -lmlx -lXext -lX11
 PATH_SRCS = ./srcs/
-SRCS = main.c parse.c
+SRCS = main.c parse.c xpm.c color.c check_map.c check_utils.c
 OBJ = $(addprefix $(BUILD_DIR)/,$(SRCS:.c=.o))
 BUILD_DIR = .build
 LIBFT = ./includes/libft/libft.a
