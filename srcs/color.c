@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrstein <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 12:50:20 by chrstein          #+#    #+#             */
-/*   Updated: 2024/06/27 12:50:27 by chrstein         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:26:56 by chrstein         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,16 @@ void	double_check_color(t_data *data, char color)
 	}
 }
 
+void	color_final(t_data *data, char color)
+{
+	if (color == 'F')
+		data->game.floor_color = \
+		(data->f_red << 16) | (data->f_green << 8) | data->f_blue;
+	else
+		data->game.ceiling_color = \
+		(data->c_red << 16) | (data->c_green << 8) | data->c_blue;
+}
+
 void	fill_color(t_data *data, char color)
 {
 	char	*line_ptr;
@@ -107,4 +117,5 @@ void	fill_color(t_data *data, char color)
 		data->c_blue = special_atoi(data, &line_ptr);
 	else
 		data->f_blue = special_atoi(data, &line_ptr);
+	color_final(data, color);
 }

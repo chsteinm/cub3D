@@ -6,7 +6,7 @@
 /*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 18:05:40 by chrstein          #+#    #+#             */
-/*   Updated: 2024/06/27 12:48:30 by chrstein         ###   ########lyon.fr   */
+/*   Updated: 2024/06/27 14:24:37 by chrstein         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@
 
 typedef struct s_game
 {
-	int					x;
-	int					y;
 	char				**map;
 	int					player_x;
 	int					player_y;
+	int					ceiling_color;
+	int					floor_color;
 	char				spawning_orientation;
 }					t_game;
 
