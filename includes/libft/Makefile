@@ -63,7 +63,8 @@ SRCS_BONUS =	ft_lstadd_back_bonus.c \
 				ft_lstlast_bonus.c \
 				ft_lstmap_bonus.c \
 				ft_lstnew_bonus.c \
-				ft_lstsize_bonus.c
+				ft_lstsize_bonus.c \
+				ft_lst_to_strs.c
 OBJ_BONUS = $(addprefix $(BUILD_DIR)/,$(SRCS_BONUS:.c=.o))
 BUILD_DIR = .build
 

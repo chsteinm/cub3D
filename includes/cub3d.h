@@ -6,7 +6,7 @@
 /*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 18:05:40 by chrstein          #+#    #+#             */
-/*   Updated: 2024/06/24 11:08:03 by chrstein         ###   ########lyon.fr   */
+/*   Updated: 2024/06/27 07:13:50 by chrstein         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_game
 	char				**map;
 	int					player_x;
 	int					player_y;
+	char				spawning_orientation;
 }					t_game;
 
 typedef struct s_data
@@ -58,11 +59,11 @@ typedef struct s_data
 	void	*ea_xpm;
 	void	*we_xpm;
 	int		c_red;
-	int		c_blue;
 	int		c_green;
+	int		c_blue;
 	int		f_red;
-	int		f_blue;
 	int		f_green;
+	int		f_blue;
 	t_list	*lst_map;
 }					t_data;
 

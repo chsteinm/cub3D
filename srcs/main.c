@@ -6,7 +6,7 @@
 /*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 03:46:35 by chrstein          #+#    #+#             */
-/*   Updated: 2024/06/24 11:47:59 by chrstein         ###   ########lyon.fr   */
+/*   Updated: 2024/06/27 10:03:21 by chrstein         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void	free_all(t_data *data)
 {
 	free(data->line);
-	ft_free_strings(data->game.map);
+	free(data->game.map);
+	ft_lstclear(&data->lst_map, &free);
 	if (data->no_xpm)
 		mlx_destroy_image(data->mlx, data->no_xpm);
 	if (data->so_xpm)
@@ -79,6 +80,14 @@ int	destroy(t_data *data)
 // 	return (1);
 // }
 
+void	print_debug(t_data *data)
+{
+	ft_dprintf(2, "\nC_red %d\nC_green %d\nC_blue %d\n\nF_red %d\nF_green %d\nF_blue %d\n\nP_x %d\nP_y %d\norientation %c\n\n", \
+	data->c_red, data->c_green, data->c_blue, data->f_red, data->f_green, data->f_blue, \
+	data->game.player_x, data->game.player_y, data->game.spawning_orientation);
+	ft_printstrs(data->game.map, 2);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -91,14 +100,15 @@ int	main(int argc, char **argv)
 	if (!data.mlx)
 		return (free_all(&data), 1);
 	parse(&data);
-	data.mlx_win = mlx_new_window(data.mlx, \
-			64 * (data.game.x + 1), 64 * (data.game.y + 1), "game");
-	if (!data.mlx_win)
-		return (free_all(&data), 1);
-	// draw_game(data.mlx, data.mlx_win, &data);
-	mlx_hook(data.mlx_win, 17, 0, &destroy, &data);
-	// mlx_hook(data.mlx_win, 2, (1L << 0), &key_press, &data);
-	mlx_loop(data.mlx);
+	print_debug(&data);
+	// data.mlx_win = mlx_new_window(data.mlx, \
+	// 		64 * (data.game.x + 1), 64 * (data.game.y + 1), "game");
+	// if (!data.mlx_win)
+	// 	return (free_all(&data), 1);
+	// // draw_game(data.mlx, data.mlx_win, &data);
+	// mlx_hook(data.mlx_win, 17, 0, &destroy, &data);
+	// // mlx_hook(data.mlx_win, 2, (1L << 0), &key_press, &data);
+	// mlx_loop(data.mlx);
 	free_all(&data);
 	return (0);
 }
