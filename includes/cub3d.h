@@ -34,14 +34,6 @@
 # define ERRCHARM "Error\nIncorrect char in map : \"%c\"\n"
 # define ERREMPTYLINE "Error\nMap can not be separated by empty line(s)\n"
 
-// enum e_xpm
-// {
-// 	_NO,
-// 	_SO,
-// 	_EA,
-// 	_WE,
-// };
-
 typedef struct s_game
 {
 	char				**map;
@@ -76,7 +68,7 @@ void	free_all(t_data *data);
 void	parse(t_data *data);
 void	xpm_load(t_data *data, void **xpm_ptr);
 void	fill_color(t_data *data, char color);
-void	check_map(t_data *data, char **map);
+void	check_map(t_data *data, char **map, int i);
 bool	is_player(char c);
 bool	is_void(char c);
 bool	map_is_not_finished(char **map, int j);

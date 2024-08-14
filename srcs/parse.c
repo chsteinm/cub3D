@@ -92,5 +92,5 @@ void	parse(t_data *data)
 		free(data->line);
 		data->line = get_next_line(data->fd);
 	}
-	check_map(data, data->game.map);
+	check_map(data, data->game.map, 0);
 }

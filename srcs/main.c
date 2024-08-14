@@ -101,8 +101,7 @@ int	main(int argc, char **argv)
 		return (free_all(&data), 1);
 	parse(&data);
 	print_debug(&data);
-	// data.mlx_win = mlx_new_window(data.mlx, \
-	// 		64 * (data.game.x + 1), 64 * (data.game.y + 1), "game");
+	// data.mlx_win = mlx_new_window(data.mlx, 64 * (data.game.x + 1), 64 * (data.game.y + 1), "game");
 	// if (!data.mlx_win)
 	// 	return (free_all(&data), 1);
 	// // draw_game(data.mlx, data.mlx_win, &data);

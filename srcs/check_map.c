@@ -35,9 +35,8 @@ void	fill_player(t_data *data, char orientation, int j, int i)
 	data->game.player_x = i;
 }
 
-void	check_map(t_data *data, char **map)
+void	check_map(t_data *data, char **map, int i)
 {
-	int	i;
 	int	j;
 
 	j = -1;
@@ -56,7 +55,7 @@ void	check_map(t_data *data, char **map)
 			if (is_player(map[j][i]))
 				fill_player(data, map[j][i], j, i);
 		}
-		if (map[j + 1][0] == '\n' && map_is_not_finished(map, j + 1))
+		if (map[j + 1] && map[j + 1][0] == '\n' && map_is_not_finished(map, j + 1))
 		{
 			ft_dprintf(2, ERREMPTYLINE);
 			return (free_all(data), exit(1));
